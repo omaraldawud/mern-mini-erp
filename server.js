@@ -1,6 +1,6 @@
-const express = require("express");
-const app = express();
-const port = process.env.PORT || 5000;
+const express = require("express"); //express() is a function that acts asa factory of applications
+const app = express(); //initializes the Express application.
+const port = process.env.PORT || 5000; //
 
 // Basic GET route for the homepage
 app.get("/", (req, res) => {
