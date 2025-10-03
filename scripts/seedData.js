@@ -1,0 +1,580 @@
+require("dotenv").config();
+const mongoose = require("mongoose");
+const Employee = require("../src/models/core/Employee");
+const Department = require("../src/models/core/Department");
+
+// Sample data
+const departments = [
+  {
+    departmentId: "DEPT-001",
+    name: "Engineering",
+    description: "Software development and technical teams",
+    budget: 1500000,
+    employeeCount: 0,
+  },
+  {
+    departmentId: "DEPT-002",
+    name: "Human Resources",
+    description: "People operations, recruitment, and employee development",
+    budget: 500000,
+    employeeCount: 0,
+  },
+  {
+    departmentId: "DEPT-003",
+    name: "Sales",
+    description: "Revenue generation and customer acquisition",
+    budget: 800000,
+    employeeCount: 0,
+  },
+];
+
+const employees = [
+  // Engineering Department (8 employees)
+  {
+    employeeId: "EMP-001",
+    personalInfo: {
+      firstName: "Sarah",
+      lastName: "Chen",
+      email: "sarah.chen@company.com",
+      phone: "+1-555-0101",
+      address: {
+        street: "123 Tech Blvd",
+        city: "San Francisco",
+        state: "CA",
+        zipCode: "94105",
+      },
+      dateOfBirth: new Date("1988-03-15"),
+    },
+    employmentInfo: {
+      department: "Engineering",
+      position: "Lead Software Engineer",
+      hireDate: new Date("2020-06-01"),
+      employmentType: "full-time",
+      salary: 145000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-002",
+    personalInfo: {
+      firstName: "Marcus",
+      lastName: "Johnson",
+      email: "marcus.johnson@company.com",
+      phone: "+1-555-0102",
+      address: {
+        street: "456 Code Lane",
+        city: "Oakland",
+        state: "CA",
+        zipCode: "94612",
+      },
+      dateOfBirth: new Date("1990-07-22"),
+    },
+    employmentInfo: {
+      department: "Engineering",
+      position: "Senior Frontend Developer",
+      hireDate: new Date("2021-02-15"),
+      employmentType: "full-time",
+      salary: 125000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-003",
+    personalInfo: {
+      firstName: "Priya",
+      lastName: "Patel",
+      email: "priya.patel@company.com",
+      phone: "+1-555-0103",
+      address: {
+        street: "789 Algorithm Ave",
+        city: "San Jose",
+        state: "CA",
+        zipCode: "95123",
+      },
+      dateOfBirth: new Date("1992-11-08"),
+    },
+    employmentInfo: {
+      department: "Engineering",
+      position: "Backend Developer",
+      hireDate: new Date("2022-01-10"),
+      employmentType: "full-time",
+      salary: 115000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-004",
+    personalInfo: {
+      firstName: "David",
+      lastName: "Kim",
+      email: "david.kim@company.com",
+      phone: "+1-555-0104",
+      address: {
+        street: "321 Database Rd",
+        city: "Berkeley",
+        state: "CA",
+        zipCode: "94704",
+      },
+      dateOfBirth: new Date("1985-09-30"),
+    },
+    employmentInfo: {
+      department: "Engineering",
+      position: "DevOps Engineer",
+      hireDate: new Date("2019-11-20"),
+      employmentType: "full-time",
+      salary: 135000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-005",
+    personalInfo: {
+      firstName: "Lisa",
+      lastName: "Wang",
+      email: "lisa.wang@company.com",
+      phone: "+1-555-0105",
+      address: {
+        street: "654 Cloud Way",
+        city: "Palo Alto",
+        state: "CA",
+        zipCode: "94301",
+      },
+      dateOfBirth: new Date("1991-04-18"),
+    },
+    employmentInfo: {
+      department: "Engineering",
+      position: "Full Stack Developer",
+      hireDate: new Date("2021-08-05"),
+      employmentType: "full-time",
+      salary: 120000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-006",
+    personalInfo: {
+      firstName: "James",
+      lastName: "Rodriguez",
+      email: "james.rodriguez@company.com",
+      phone: "+1-555-0106",
+      address: {
+        street: "987 API Street",
+        city: "Redwood City",
+        state: "CA",
+        zipCode: "94063",
+      },
+      dateOfBirth: new Date("1987-12-03"),
+    },
+    employmentInfo: {
+      department: "Engineering",
+      position: "Mobile Developer",
+      hireDate: new Date("2020-09-12"),
+      employmentType: "full-time",
+      salary: 118000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-007",
+    personalInfo: {
+      firstName: "Amanda",
+      lastName: "Fisher",
+      email: "amanda.fisher@company.com",
+      phone: "+1-555-0107",
+      address: {
+        street: "147 UI Lane",
+        city: "San Mateo",
+        state: "CA",
+        zipCode: "94401",
+      },
+      dateOfBirth: new Date("1993-06-25"),
+    },
+    employmentInfo: {
+      department: "Engineering",
+      position: "Junior Developer",
+      hireDate: new Date("2023-03-01"),
+      employmentType: "full-time",
+      salary: 85000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-008",
+    personalInfo: {
+      firstName: "Kevin",
+      lastName: "Zhang",
+      email: "kevin.zhang@company.com",
+      phone: "+1-555-0108",
+      address: {
+        street: "258 Debug Dr",
+        city: "Fremont",
+        state: "CA",
+        zipCode: "94538",
+      },
+      dateOfBirth: new Date("1989-01-14"),
+    },
+    employmentInfo: {
+      department: "Engineering",
+      position: "QA Engineer",
+      hireDate: new Date("2021-05-20"),
+      employmentType: "full-time",
+      salary: 95000,
+      status: "active",
+    },
+  },
+
+  // Human Resources Department (6 employees)
+  {
+    employeeId: "EMP-009",
+    personalInfo: {
+      firstName: "Jennifer",
+      lastName: "Morris",
+      email: "jennifer.morris@company.com",
+      phone: "+1-555-0109",
+      address: {
+        street: "369 People Ave",
+        city: "San Francisco",
+        state: "CA",
+        zipCode: "94107",
+      },
+      dateOfBirth: new Date("1983-08-19"),
+    },
+    employmentInfo: {
+      department: "Human Resources",
+      position: "HR Director",
+      hireDate: new Date("2018-04-15"),
+      employmentType: "full-time",
+      salary: 110000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-010",
+    personalInfo: {
+      firstName: "Robert",
+      lastName: "Thompson",
+      email: "robert.thompson@company.com",
+      phone: "+1-555-0110",
+      address: {
+        street: "741 Talent St",
+        city: "Daly City",
+        state: "CA",
+        zipCode: "94015",
+      },
+      dateOfBirth: new Date("1986-05-22"),
+    },
+    employmentInfo: {
+      department: "Human Resources",
+      position: "Recruitment Manager",
+      hireDate: new Date("2019-07-30"),
+      employmentType: "full-time",
+      salary: 90000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-011",
+    personalInfo: {
+      firstName: "Maria",
+      lastName: "Garcia",
+      email: "maria.garcia@company.com",
+      phone: "+1-555-0111",
+      address: {
+        street: "852 Benefits Rd",
+        city: "San Bruno",
+        state: "CA",
+        zipCode: "94066",
+      },
+      dateOfBirth: new Date("1990-02-28"),
+    },
+    employmentInfo: {
+      department: "Human Resources",
+      position: "HR Business Partner",
+      hireDate: new Date("2020-11-10"),
+      employmentType: "full-time",
+      salary: 85000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-012",
+    personalInfo: {
+      firstName: "Thomas",
+      lastName: "Clark",
+      email: "thomas.clark@company.com",
+      phone: "+1-555-0112",
+      address: {
+        street: "963 Culture Way",
+        city: "South San Francisco",
+        state: "CA",
+        zipCode: "94080",
+      },
+      dateOfBirth: new Date("1988-10-05"),
+    },
+    employmentInfo: {
+      department: "Human Resources",
+      position: "Learning & Development Specialist",
+      hireDate: new Date("2021-03-22"),
+      employmentType: "full-time",
+      salary: 78000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-013",
+    personalInfo: {
+      firstName: "Michelle",
+      lastName: "Lee",
+      email: "michelle.lee@company.com",
+      phone: "+1-555-0113",
+      address: {
+        street: "159 Onboarding Blvd",
+        city: "San Francisco",
+        state: "CA",
+        zipCode: "94103",
+      },
+      dateOfBirth: new Date("1992-07-12"),
+    },
+    employmentInfo: {
+      department: "Human Resources",
+      position: "HR Coordinator",
+      hireDate: new Date("2022-06-01"),
+      employmentType: "full-time",
+      salary: 65000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-014",
+    personalInfo: {
+      firstName: "Daniel",
+      lastName: "Brown",
+      email: "daniel.brown@company.com",
+      phone: "+1-555-0114",
+      address: {
+        street: "753 Policy Lane",
+        city: "Alameda",
+        state: "CA",
+        zipCode: "94501",
+      },
+      dateOfBirth: new Date("1987-12-30"),
+    },
+    employmentInfo: {
+      department: "Human Resources",
+      position: "Compensation Analyst",
+      hireDate: new Date("2020-08-18"),
+      employmentType: "full-time",
+      salary: 82000,
+      status: "active",
+    },
+  },
+
+  // Sales Department (6 employees)
+  {
+    employeeId: "EMP-015",
+    personalInfo: {
+      firstName: "Jessica",
+      lastName: "Taylor",
+      email: "jessica.taylor@company.com",
+      phone: "+1-555-0115",
+      address: {
+        street: "456 Revenue Rd",
+        city: "San Francisco",
+        state: "CA",
+        zipCode: "94108",
+      },
+      dateOfBirth: new Date("1984-09-14"),
+    },
+    employmentInfo: {
+      department: "Sales",
+      position: "Sales Director",
+      hireDate: new Date("2017-11-05"),
+      employmentType: "full-time",
+      salary: 130000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-016",
+    personalInfo: {
+      firstName: "Christopher",
+      lastName: "Wilson",
+      email: "christopher.wilson@company.com",
+      phone: "+1-555-0116",
+      address: {
+        street: "789 Deal Dr",
+        city: "San Rafael",
+        state: "CA",
+        zipCode: "94901",
+      },
+      dateOfBirth: new Date("1989-03-27"),
+    },
+    employmentInfo: {
+      department: "Sales",
+      position: "Senior Account Executive",
+      hireDate: new Date("2019-01-20"),
+      employmentType: "full-time",
+      salary: 95000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-017",
+    personalInfo: {
+      firstName: "Ashley",
+      lastName: "Martinez",
+      email: "ashley.martinez@company.com",
+      phone: "+1-555-0117",
+      address: {
+        street: "321 Client Ct",
+        city: "Walnut Creek",
+        state: "CA",
+        zipCode: "94596",
+      },
+      dateOfBirth: new Date("1991-06-08"),
+    },
+    employmentInfo: {
+      department: "Sales",
+      position: "Account Executive",
+      hireDate: new Date("2020-04-12"),
+      employmentType: "full-time",
+      salary: 75000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-018",
+    personalInfo: {
+      firstName: "Brian",
+      lastName: "Anderson",
+      email: "brian.anderson@company.com",
+      phone: "+1-555-0118",
+      address: {
+        street: "654 Prospect Pl",
+        city: "Concord",
+        state: "CA",
+        zipCode: "94520",
+      },
+      dateOfBirth: new Date("1986-11-19"),
+    },
+    employmentInfo: {
+      department: "Sales",
+      position: "Sales Development Representative",
+      hireDate: new Date("2021-09-08"),
+      employmentType: "full-time",
+      salary: 60000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-019",
+    personalInfo: {
+      firstName: "Nicole",
+      lastName: "Harris",
+      email: "nicole.harris@company.com",
+      phone: "+1-555-0119",
+      address: {
+        street: "987 Quota Way",
+        city: "Pleasanton",
+        state: "CA",
+        zipCode: "94566",
+      },
+      dateOfBirth: new Date("1993-04-03"),
+    },
+    employmentInfo: {
+      department: "Sales",
+      position: "Sales Operations Analyst",
+      hireDate: new Date("2022-02-14"),
+      employmentType: "full-time",
+      salary: 70000,
+      status: "active",
+    },
+  },
+  {
+    employeeId: "EMP-020",
+    personalInfo: {
+      firstName: "Jason",
+      lastName: "Miller",
+      email: "jason.miller@company.com",
+      phone: "+1-555-0120",
+      address: {
+        street: "147 Pipeline Ave",
+        city: "Livermore",
+        state: "CA",
+        zipCode: "94550",
+      },
+      dateOfBirth: new Date("1988-08-25"),
+    },
+    employmentInfo: {
+      department: "Sales",
+      position: "Customer Success Manager",
+      hireDate: new Date("2021-12-01"),
+      employmentType: "full-time",
+      salary: 80000,
+      status: "active",
+    },
+  },
+];
+
+const seedDatabase = async () => {
+  try {
+    // Connect to MongoDB
+    await mongoose.connect(
+      process.env.MONGO_URI || "mongodb://localhost:27017/mercury-erp"
+    );
+    console.log("✅ Connected to MongoDB");
+
+    // Clear existing data
+    console.log("🗑️  Clearing existing data...");
+    await Employee.deleteMany({});
+    await Department.deleteMany({});
+    console.log("✅ Existing data cleared");
+
+    // Create departments
+    console.log("🏢 Creating departments...");
+    const createdDepartments = await Department.insertMany(departments);
+    console.log(`✅ Created ${createdDepartments.length} departments`);
+
+    // Create employees
+    console.log("👥 Creating employees...");
+    const createdEmployees = await Employee.insertMany(employees);
+    console.log(`✅ Created ${createdEmployees.length} employees`);
+
+    // Update department employee counts
+    console.log("📊 Updating department statistics...");
+    for (const dept of departments) {
+      const count = await Employee.countDocuments({
+        "employmentInfo.department": dept.name,
+      });
+      await Department.findOneAndUpdate(
+        { name: dept.name },
+        { employeeCount: count }
+      );
+      console.log(`   ${dept.name}: ${count} employees`);
+    }
+
+    console.log("\n🎉 Database seeded successfully!");
+    console.log("📈 Summary:");
+    console.log(`   Departments: ${createdDepartments.length}`);
+    console.log(`   Employees: ${createdEmployees.length}`);
+
+    const totalSalary = createdEmployees.reduce(
+      (sum, emp) => sum + (emp.employmentInfo.salary || 0),
+      0
+    );
+    console.log(`   Total Annual Salary: $${totalSalary.toLocaleString()}`);
+  } catch (error) {
+    console.error("❌ Seeding error:", error);
+  } finally {
+    await mongoose.connection.close();
+    console.log("📋 Database connection closed");
+    process.exit(0);
+  }
+};
+
+// Run if called directly
+if (require.main === module) {
+  seedDatabase();
+}
+
+module.exports = seedDatabase;

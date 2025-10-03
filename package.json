@@ -1,16 +1,42 @@
 {
-  "name": "my-express-server",
+  "name": "mercury-erp",
+  "author": "Dr. Omar Aldawud",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Modular ERP System starting with HR",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node scripts/seedData.js",
+    "seed:reset": "node scripts/seedData.js",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up",
+    "docker:build": "docker build -t mercury-erp ."
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mongoose": "^7.8.7",
+    "react-router-dom": "^7.9.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omaraldawud/mern-mini.git"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "dependencies": {
-    "express": "^5.1.0"
-  }
+  "bugs": {
+    "url": "https://github.com/omaraldawud/mern-mini/issues"
+  },
+  "homepage": "https://github.com/omaraldawud/mern-mini#readme"
 }
