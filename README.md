@@ -11,6 +11,9 @@ This project walks through the essentials of building and deploying a MERN stack
 
 # Note: This repository contains the source code used throughout the this demo with video series. Each video builds upon the last, covering key topics in modern full-stack web development:
 
+# Initital run of the app should yield this UI (ensure running server and frontend)
+![Alt text](docs/erp-view1.jpg)
+
 1. **Deploying your Node.js/Express Server to Railway**  
    Learn how to host your backend API on [Railway](https://railway.app) with ease.
 
