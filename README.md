@@ -4,12 +4,12 @@
 Welcome to the **Full-Stack MERN Mini-Series**!  
 This project walks through the essentials of building and deploying a MERN stack application step by step — perfect for anyone looking to quickly learn how to take a project from local development to live production.
 
-## THIS DEPLOYMENT ONLY CONTAINS BACKEND, FRONTEND WILL BE PUSHED BY OCT-10-25.  YOU CAN FORK THIS BACKEND AND BUILD YUOR OWN FRONT END REACT UI.
+## THIS DEPLOYMENT ONLY CONTAINS BACKEND and UNTESTED FRONTEND.
+ WILL BE PUSHED BY OCT-10-25.  YOU CAN FORK THIS BACKEND AND BUILD YUOR OWN FRONT END REACT UI.
 
 ## 🎯 Series Overview
 
-This repository contains the source code used throughout the video series.   
-Each video builds upon the last, covering key topics in modern full-stack web development:
+# Note: This repository contains the source code used throughout the this demo with video series. Each video builds upon the last, covering key topics in modern full-stack web development:
 
 1. **Deploying your Node.js/Express Server to Railway**  
    Learn how to host your backend API on [Railway](https://railway.app) with ease.
