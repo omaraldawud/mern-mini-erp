@@ -1,0 +1,13 @@
+# 1.0.0 (2025-10-05)
+
+
+### Bug Fixes
+
+* Added App UI View ([3eba659](https://github.com/omaraldawud/mern-mini-erp/commit/3eba6597cad3f881e7d00501ec97b7e3ec6fe026))
+* added index, main and configured frontend ([e42aa21](https://github.com/omaraldawud/mern-mini-erp/commit/e42aa212c99fa640e905430f67d0641f65814e9c))
+
+
+### Features
+
+* add customer filtering to manifest list & setup sematic-release ([12ac787](https://github.com/omaraldawud/mern-mini-erp/commit/12ac78783738ac112f4c4a1d85d508015121745b))
+* Added Mongo Schems, Contollers and Routes ([ba42b47](https://github.com/omaraldawud/mern-mini-erp/commit/ba42b47c4cfc4f197a796ef3b76f8903578ff3d9))
