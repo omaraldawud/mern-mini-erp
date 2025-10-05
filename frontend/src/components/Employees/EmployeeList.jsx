@@ -1,39 +1,92 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-const EmployeeList = ({ employees = [], onEdit, onDelete }) => {
-  // Safe function to get employee name
-  const getEmployeeName = (employee) => {
-    if (!employee || !employee.personalInfo) return "N/A";
-    return `${employee.personalInfo.firstName || ""} ${
-      employee.personalInfo.lastName || ""
-    }`.trim();
-  };
+const EmployeeList = ({
+  employees = [],
+  onEdit,
+  onDelete,
+  initialDepartment = "", // from backend / URL
+}) => {
+  const [search, setSearch] = useState(""); // local text search
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const inputRef = useRef(null);
 
-  const getEmployeeEmail = (employee) => {
-    return employee?.personalInfo?.email || "N/A";
-  };
+  // Debounce the search input for smoother UX
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedSearch(search), 300);
+    return () => clearTimeout(handler);
+  }, [search]);
 
-  const getEmployeeDepartment = (employee) => {
-    return employee?.employmentInfo?.department || "N/A";
-  };
+  // Safe getters
+  const getEmployeeName = (emp) =>
+    emp?.personalInfo
+      ? `${emp.personalInfo.firstName || ""} ${
+          emp.personalInfo.lastName || ""
+        }`.trim()
+      : "N/A";
 
-  const getEmployeePosition = (employee) => {
-    return employee?.employmentInfo?.position || "N/A";
-  };
+  const getEmployeeEmail = (emp) => emp?.personalInfo?.email || "N/A";
+  const getEmployeeDepartment = (emp) =>
+    emp?.employmentInfo?.department || "N/A";
+  const getEmployeePosition = (emp) => emp?.employmentInfo?.position || "N/A";
+  const getEmployeeStatus = (emp) => emp?.employmentInfo?.status || "unknown";
 
-  const getEmployeeStatus = (employee) => {
-    return employee?.employmentInfo?.status || "unknown";
-  };
+  // Filter employees locally
+  const filteredEmployees = employees.filter((emp) => {
+    const name = getEmployeeName(emp).toLowerCase();
+    const role = getEmployeePosition(emp).toLowerCase();
+    const department = getEmployeeDepartment(emp).toLowerCase();
+
+    const searchText = debouncedSearch.toLowerCase();
+    const searchMatch = name.includes(searchText) || role.includes(searchText);
+
+    const departmentMatch = initialDepartment
+      ? department === initialDepartment.toLowerCase()
+      : true;
+
+    return searchMatch && departmentMatch;
+  });
 
   return (
     <div className="card erp-card">
       <div className="card-header">
         <h5 className="card-title mb-0">
-          <i className="bi bi-list-ul me-2"></i>
-          Employee List
+          <i className="bi bi-list-ul me-2"></i>Employee List
         </h5>
       </div>
-      <div className="card-body p-0">
+
+      <div className="card-body">
+        {/* Search input */}
+        <div className="mb-3 position-relative" style={{ maxWidth: "400px" }}>
+          <input
+            ref={inputRef}
+            type="text"
+            className="form-control ps-3 pe-5"
+            placeholder="Search by name or position..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {search && (
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+              style={{
+                padding: "0 6px",
+                height: "70%",
+                borderRadius: "50%",
+                lineHeight: 1,
+                fontSize: "0.8rem",
+              }}
+              onClick={() => {
+                setSearch("");
+                inputRef.current.focus();
+              }}
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        {/* Employee table */}
         <div className="table-responsive">
           <table className="table table-hover mb-0">
             <thead className="table-light">
@@ -48,48 +101,48 @@ const EmployeeList = ({ employees = [], onEdit, onDelete }) => {
               </tr>
             </thead>
             <tbody>
-              {employees && employees.length > 0 ? (
-                employees.map((employee) => (
-                  <tr key={employee._id}>
+              {filteredEmployees.length > 0 ? (
+                filteredEmployees.map((emp) => (
+                  <tr key={emp._id}>
                     <td>
                       <span className="badge bg-secondary">
-                        {employee.employeeId || "N/A"}
+                        {emp.employeeId || "N/A"}
                       </span>
                     </td>
-                    <td>{getEmployeeName(employee)}</td>
-                    <td>{getEmployeeEmail(employee)}</td>
+                    <td>{getEmployeeName(emp)}</td>
+                    <td>{getEmployeeEmail(emp)}</td>
                     <td>
                       <span className="badge bg-info">
-                        {getEmployeeDepartment(employee)}
+                        {getEmployeeDepartment(emp)}
                       </span>
                     </td>
-                    <td>{getEmployeePosition(employee)}</td>
+                    <td>{getEmployeePosition(emp)}</td>
                     <td>
                       <span
                         className={`badge ${
-                          getEmployeeStatus(employee) === "active"
+                          getEmployeeStatus(emp) === "active"
                             ? "bg-success"
-                            : getEmployeeStatus(employee) === "on-leave"
+                            : getEmployeeStatus(emp) === "on-leave"
                             ? "bg-warning"
                             : "bg-danger"
                         }`}
                       >
-                        {getEmployeeStatus(employee)}
+                        {getEmployeeStatus(emp)}
                       </span>
                     </td>
                     <td>
                       <div className="btn-group btn-group-sm">
                         <button
                           className="btn btn-outline-primary"
-                          onClick={() => onEdit(employee)}
-                          disabled={!employee}
+                          onClick={() => onEdit(emp)}
+                          disabled={!emp}
                         >
                           <i className="bi bi-pencil"></i>
                         </button>
                         <button
                           className="btn btn-outline-danger"
-                          onClick={() => onDelete(employee._id)}
-                          disabled={!employee}
+                          onClick={() => onDelete(emp._id)}
+                          disabled={!emp}
                         >
                           <i className="bi bi-trash"></i>
                         </button>

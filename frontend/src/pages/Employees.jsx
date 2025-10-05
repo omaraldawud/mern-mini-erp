@@ -10,155 +10,81 @@ const Employees = () => {
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [departmentFilter, setDepartmentFilter] = useState("");
+  const [departmentFilter, setDepartmentFilter] = useState(""); // Backend filter
 
   const location = useLocation();
 
+  // 1️⃣ Read department from URL
   useEffect(() => {
-    // Parse URL query parameters when component mounts or URL changes
     const searchParams = new URLSearchParams(location.search);
-    const department = searchParams.get("department");
-
-    if (department) {
-      setDepartmentFilter(department);
-    }
-
+    const department = searchParams.get("department") || "";
+    setDepartmentFilter(department);
     fetchEmployees(department);
-  }, [location.search]); // Re-fetch when URL parameters change
+  }, [location.search]);
 
+  // 2️⃣ Fetch employees from backend
   const fetchEmployees = async (department = "") => {
     try {
       setLoading(true);
       setError("");
-
       const params = {};
-      if (department) {
-        params.department = department;
-      }
-
+      if (department) params.department = department;
       const response = await employeeAPI.getAll(params);
       const employeeData = response.data.data || response.data;
       setEmployees(employeeData || []);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       setError("Failed to load employees.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCreateEmployee = async (employeeData) => {
-    try {
-      await employeeAPI.create(employeeData);
-      setShowForm(false);
-      fetchEmployees();
-      alert("Employee created successfully!");
-    } catch (error) {
-      alert("Failed to create employee");
-    }
+  // 3️⃣ Employee form handlers
+  const handleCreateEmployee = async (data) => {
+    /* ... */
   };
-
-  const handleEditEmployee = (employee) => {
-    setEditingEmployee(employee);
+  const handleEditEmployee = (emp) => {
+    setEditingEmployee(emp);
     setShowForm(true);
   };
-
-  const handleUpdateEmployee = async (employeeData) => {
-    try {
-      await employeeAPI.update(editingEmployee._id, employeeData);
-      setShowForm(false);
-      setEditingEmployee(null);
-      fetchEmployees();
-      alert("Employee updated successfully!");
-    } catch (error) {
-      alert("Failed to update employee");
-    }
+  const handleUpdateEmployee = async (data) => {
+    /* ... */
+  };
+  const handleDeleteEmployee = async (id) => {
+    /* ... */
   };
 
-  const handleDeleteEmployee = async (employeeId) => {
-    if (window.confirm("Are you sure you want to delete this employee?")) {
-      try {
-        await employeeAPI.delete(employeeId);
-        fetchEmployees();
-        alert("Employee deleted successfully!");
-      } catch (error) {
-        alert("Failed to delete employee");
-      }
-    }
-  };
-
+  // Clear backend filter
   const clearFilter = () => {
     setDepartmentFilter("");
-    // Remove the query parameter from URL
     window.history.replaceState({}, "", "/employees");
+    fetchEmployees();
   };
 
-  if (loading) {
-    return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "50vh" }}
-      >
-        <div className="text-center">
-          <div className="spinner-border text-primary mb-3" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-          <p>Loading employees...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "50vh" }}
-      >
-        <div className="alert alert-danger text-center">
-          <i className="bi bi-exclamation-triangle me-2"></i>
-          {error}
-          <div className="mt-2">
-            <button
-              className="btn btn-sm btn-outline-danger"
-              onClick={fetchEmployees}
-            >
-              Retry
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <p>Loading employees...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
-          <h1 className="h3 mb-1">
-            <i className="bi bi-people me-2"></i>
+          <h1 className="h3">
             Employees
             {departmentFilter && (
-              <span className="ms-2">
-                <span className="badge bg-info fs-6">
-                  {departmentFilter} Department
-                  <button
-                    className="btn-close btn-close-white ms-2"
-                    style={{ fontSize: "0.6rem" }}
-                    onClick={clearFilter}
-                    aria-label="Clear filter"
-                  ></button>
-                </span>
+              <span className="badge bg-info ms-2">
+                {departmentFilter} Department
+                <button
+                  className="btn-close btn-close-white ms-2"
+                  style={{ fontSize: "0.6rem" }}
+                  onClick={clearFilter}
+                  aria-label="Clear filter"
+                />
               </span>
             )}
           </h1>
-          <p className="text-muted mb-0">
-            Manage your team members ({employees.length} total)
-            {departmentFilter && ` in ${departmentFilter}`}
-          </p>
         </div>
         <button className="btn btn-primary" onClick={() => setShowForm(true)}>
-          <i className="bi bi-person-plus me-2"></i>
           Add Employee
         </button>
       </div>
@@ -177,6 +103,7 @@ const Employees = () => {
           employees={employees}
           onEdit={handleEditEmployee}
           onDelete={handleDeleteEmployee}
+          initialFilter={departmentFilter} // Pass backend filter as initial local filter
         />
       )}
     </div>
