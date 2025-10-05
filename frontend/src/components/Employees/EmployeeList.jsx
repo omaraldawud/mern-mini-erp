@@ -1,7 +1,30 @@
 import React from "react";
-import EmployeeCard from "./EmployeeCard";
 
-const EmployeeList = ({ employees, onEdit, onDelete }) => {
+const EmployeeList = ({ employees = [], onEdit, onDelete }) => {
+  // Safe function to get employee name
+  const getEmployeeName = (employee) => {
+    if (!employee || !employee.personalInfo) return "N/A";
+    return `${employee.personalInfo.firstName || ""} ${
+      employee.personalInfo.lastName || ""
+    }`.trim();
+  };
+
+  const getEmployeeEmail = (employee) => {
+    return employee?.personalInfo?.email || "N/A";
+  };
+
+  const getEmployeeDepartment = (employee) => {
+    return employee?.employmentInfo?.department || "N/A";
+  };
+
+  const getEmployeePosition = (employee) => {
+    return employee?.employmentInfo?.position || "N/A";
+  };
+
+  const getEmployeeStatus = (employee) => {
+    return employee?.employmentInfo?.status || "unknown";
+  };
+
   return (
     <div className="card erp-card">
       <div className="card-header">
@@ -30,31 +53,28 @@ const EmployeeList = ({ employees, onEdit, onDelete }) => {
                   <tr key={employee._id}>
                     <td>
                       <span className="badge bg-secondary">
-                        {employee.employeeId}
+                        {employee.employeeId || "N/A"}
                       </span>
                     </td>
-                    <td>
-                      {employee.personalInfo.firstName}{" "}
-                      {employee.personalInfo.lastName}
-                    </td>
-                    <td>{employee.personalInfo.email}</td>
+                    <td>{getEmployeeName(employee)}</td>
+                    <td>{getEmployeeEmail(employee)}</td>
                     <td>
                       <span className="badge bg-info">
-                        {employee.employmentInfo.department}
+                        {getEmployeeDepartment(employee)}
                       </span>
                     </td>
-                    <td>{employee.employmentInfo.position}</td>
+                    <td>{getEmployeePosition(employee)}</td>
                     <td>
                       <span
                         className={`badge ${
-                          employee.employmentInfo.status === "active"
+                          getEmployeeStatus(employee) === "active"
                             ? "bg-success"
-                            : employee.employmentInfo.status === "on-leave"
+                            : getEmployeeStatus(employee) === "on-leave"
                             ? "bg-warning"
                             : "bg-danger"
                         }`}
                       >
-                        {employee.employmentInfo.status}
+                        {getEmployeeStatus(employee)}
                       </span>
                     </td>
                     <td>
@@ -62,12 +82,14 @@ const EmployeeList = ({ employees, onEdit, onDelete }) => {
                         <button
                           className="btn btn-outline-primary"
                           onClick={() => onEdit(employee)}
+                          disabled={!employee}
                         >
                           <i className="bi bi-pencil"></i>
                         </button>
                         <button
                           className="btn btn-outline-danger"
                           onClick={() => onDelete(employee._id)}
+                          disabled={!employee}
                         >
                           <i className="bi bi-trash"></i>
                         </button>

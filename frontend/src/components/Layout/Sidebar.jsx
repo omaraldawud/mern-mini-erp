@@ -17,7 +17,7 @@ const Sidebar = () => {
           <i className="bi bi-cpu me-2"></i>
           Mercury ERP
         </h5>
-        <small className="text-muted">HR System</small>
+        <small className="text-primary">HR System</small>
       </div>
 
       <nav className="p-3">

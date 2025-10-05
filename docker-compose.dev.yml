@@ -17,9 +17,9 @@ services:
       dockerfile: docker/Dockerfile
     container_name: mercury-app
     environment:
-      NODE_ENV: development
-      MONGODB_URI:  mongodb+srv://shippingUser:vUNEXSbWgeFyBWbS@cluster0-shipping-app.vr9ihhb.mongodb.net/mern-mercury-erp-db?retryWrites=true&w=majority&appName=Cluster0-shipping-app
-
+      - NODE_ENV=development
+      - MONGO_URI=${MONGO_URI}  # This will read from .env file
+      - PORT=${PORT}
     ports:
       - "5000:5000"
     depends_on:

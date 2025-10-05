@@ -9,14 +9,7 @@ const departmentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    enum: [
-      "Engineering",
-      "Human Resources",
-      "Sales",
-      "Marketing",
-      "Finance",
-      "Operations",
-    ],
+    unique: true,
   },
   description: String,
   manager: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
@@ -35,6 +28,4 @@ departmentSchema.pre("save", function (next) {
   next();
 });
 
-// ✅ CRITICAL: This must be at the end
-const Department = mongoose.model("Department", departmentSchema);
-module.exports = Department; // ✅ Export the model, not the schema
+module.exports = mongoose.model("Department", departmentSchema);

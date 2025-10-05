@@ -1,6 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const DepartmentList = ({ departments, onEdit, onDelete }) => {
+  const navigate = useNavigate();
+
+  const handleViewEmployees = (departmentName) => {
+    // Navigate to employees page with department filter
+    navigate(`/employees?department=${encodeURIComponent(departmentName)}`);
+  };
+
   return (
     <div className="card erp-card">
       <div className="card-header">
@@ -37,9 +45,16 @@ const DepartmentList = ({ departments, onEdit, onDelete }) => {
                     </td>
                     <td>{dept.description}</td>
                     <td>
-                      <span className="badge bg-primary">
-                        {dept.employeeCount} employees
-                      </span>
+                      <button
+                        className="btn btn-link btn-sm p-0 text-decoration-none"
+                        onClick={() => handleViewEmployees(dept.name)}
+                        title={`View ${dept.employeeCount} employees in ${dept.name}`}
+                      >
+                        <span className="badge bg-primary">
+                          <i className="bi bi-people me-1"></i>
+                          {dept.employeeCount} employees
+                        </span>
+                      </button>
                     </td>
                     <td>${dept.budget?.toLocaleString()}</td>
                     <td>
@@ -56,12 +71,21 @@ const DepartmentList = ({ departments, onEdit, onDelete }) => {
                         <button
                           className="btn btn-outline-primary"
                           onClick={() => onEdit(dept)}
+                          title="Edit Department"
                         >
                           <i className="bi bi-pencil"></i>
                         </button>
                         <button
+                          className="btn btn-outline-info"
+                          onClick={() => handleViewEmployees(dept.name)}
+                          title="View Employees"
+                        >
+                          <i className="bi bi-eye"></i>
+                        </button>
+                        <button
                           className="btn btn-outline-danger"
                           onClick={() => onDelete(dept._id)}
+                          title="Delete Department"
                         >
                           <i className="bi bi-trash"></i>
                         </button>
