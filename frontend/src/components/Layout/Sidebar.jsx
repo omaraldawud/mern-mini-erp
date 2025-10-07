@@ -1,28 +1,27 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { dashboardNavigation } from "./DashboardNavigation";
 
 const Sidebar = () => {
   const location = useLocation();
 
-  const navigation = [
-    { name: "Dashboard", href: "/", icon: "bi-speedometer2" },
-    { name: "Employees", href: "/employees", icon: "bi-people" },
-    { name: "Departments", href: "/departments", icon: "bi-building" },
-  ];
-
   return (
-    <div className="erp-sidebar text-white" style={{ width: "250px" }}>
+    <div className="erp-sidebar text-white" style={{ width: "300px" }}>
       <div className="p-4 border-bottom border-secondary">
-        <h5 className="mb-0">
-          <i className="bi bi-cpu me-2"></i>
-          Mercury ERP
-        </h5>
-        <small className="text-primary">HR System</small>
+        <div className="d-flex align-items-center mb-4">
+          <i className="bi bi-cpu fs-5 text-primary me-2"></i>
+          <h5 className="mb-0 fw-bold text-white">Mercury ERP</h5>
+        </div>
+        <div className="d-flex align-items-center">
+          <span className="badge bg-warning text-dark d-flex align-items-center py-2">
+            <i className="bi-person-badge me-2"></i>
+            HCM Module
+          </span>
+        </div>
       </div>
-
       <nav className="p-3">
         <ul className="nav nav-pills flex-column">
-          {navigation.map((item) => (
+          {dashboardNavigation.map((item) => (
             <li key={item.name} className="nav-item mb-2">
               <Link
                 to={item.href}

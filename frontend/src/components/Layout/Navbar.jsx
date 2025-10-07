@@ -1,46 +1,36 @@
 import React from "react";
+import { Dropdown, NavDropdown } from "react-bootstrap";
 
+//
 const Navbar = () => {
   return (
     <nav className="navbar navbar-dark erp-navbar shadow-sm">
       <div className="container-fluid">
         <span className="navbar-brand mb-0 h1">
           <i className="bi bi-building me-2"></i>
-          MercuryERP
+          HR Management System - HCM
         </span>
 
         <div className="d-flex align-items-center">
-          <span className="text-light me-3">HR Management System</span>
-          <div className="dropdown">
-            <button
-              className="btn btn-outline-light dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-            >
+          <Dropdown>
+            <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
               <i className="bi bi-person-circle me-2"></i>
               Admin
-            </button>
-            <ul className="dropdown-menu dropdown-menu-end">
-              <li>
-                <a className="dropdown-item" href="#">
-                  <i className="bi bi-person me-2"></i>Profile
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  <i className="bi bi-gear me-2"></i>Settings
-                </a>
-              </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  <i className="bi bi-box-arrow-right me-2"></i>Logout
-                </a>
-              </li>
-            </ul>
-          </div>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu align="end">
+              <Dropdown.Item href="#">
+                <i className="bi bi-person me-2"></i>Profile
+              </Dropdown.Item>
+              <Dropdown.Item href="#">
+                <i className="bi bi-gear me-2"></i>Settings
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="#">
+                <i className="bi bi-box-arrow-right me-2"></i>Logout
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </div>
     </nav>

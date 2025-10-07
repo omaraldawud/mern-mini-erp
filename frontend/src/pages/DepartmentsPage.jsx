@@ -4,7 +4,7 @@ import DepartmentCard from "../components/Departments/DepartmentCard";
 import DepartmentForm from "../components/Departments/DepartmentForm";
 import { departmentAPI } from "../services/api";
 
-const Departments = () => {
+const DepartmentsPage = () => {
   const [departments, setDepartments] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingDepartment, setEditingDepartment] = useState(null);
@@ -224,4 +224,4 @@ const Departments = () => {
   );
 };
 
-export default Departments;
+export default DepartmentsPage;

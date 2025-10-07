@@ -4,7 +4,7 @@ import EmployeeList from "../components/Employees/EmployeeList";
 import EmployeeForm from "../components/Employees/EmployeeForm";
 import { employeeAPI } from "../services/api";
 
-const Employees = () => {
+const EmployeesPage = () => {
   const [employees, setEmployees] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
@@ -70,6 +70,7 @@ const Employees = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h1 className="h3">
+            <i className="bi bi-people me-2"></i>
             Employees
             {departmentFilter && (
               <span className="badge bg-info ms-2">
@@ -110,4 +111,4 @@ const Employees = () => {
   );
 };
 
-export default Employees;
+export default EmployeesPage;
