@@ -14,6 +14,8 @@ WILL BE PUSHED BY OCT-10-25. YOU CAN FORK THIS BACKEND AND BUILD YOUR OWN FRONT 
 # Initial run of the app should yield this UI (ensure running server and frontend)
 
 ![Alt text](docs/erp-view1.jpg)
+![Alt text](docs/erp-emps.jpg)
+![Alt text](docs/erp-deps.jpg)
 
 1. **Deploying your Node.js/Express Server to Railway**
    Learn how to host your backend API on [Railway](https://railway.app) with ease.
