@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.1.0...v1.2.0) (2025-10-07)
+
+
+### Features
+
+* Added Filters, Sidebar Menu for HCM ([9c8f775](https://github.com/omaraldawud/mern-mini-erp/commit/9c8f77510628745e36b9cbc2b3728e9c2f5acc8c))
+
 # [1.1.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.0.0...v1.1.0) (2025-10-05)
 
 
