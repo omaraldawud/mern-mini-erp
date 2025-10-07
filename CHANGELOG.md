@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.0.0...v1.1.0) (2025-10-05)
+
+
+### Features
+
+* Added Emp. Filtering ([aca2e17](https://github.com/omaraldawud/mern-mini-erp/commit/aca2e1745812ec4d41afeec079fd64a0bd355d65))
+* Added Emp. Filtering ([471a385](https://github.com/omaraldawud/mern-mini-erp/commit/471a385784c367a3476945792125bb0be3dd4a26))
+
 # 1.0.0 (2025-10-05)
 
 
