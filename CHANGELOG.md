@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.3.0...v1.4.0) (2025-10-08)
+
+
+### Features
+
+* update dashboard to show real stats ([0bb3b90](https://github.com/omaraldawud/mern-mini-erp/commit/0bb3b900e1c43b0002788affa0195394b795857f))
+
 # [1.3.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.2.0...v1.3.0) (2025-10-08)
 
 
