@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.2.0...v1.3.0) (2025-10-08)
+
+
+### Features
+
+* Implemented Employee CRUD ([b18171e](https://github.com/omaraldawud/mern-mini-erp/commit/b18171e0a9d0ecbb9761b9dd3bb51b78c39622b6))
+
 # [1.2.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.1.0...v1.2.0) (2025-10-07)
 
 
