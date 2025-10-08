@@ -3,9 +3,23 @@
 Welcome to the **Full-Stack MERN Mini-Series**!
 This project walks through the essentials of building and deploying a MERN stack application step by step — perfect for anyone looking to quickly learn how to take a project from local development to live production.
 
-## THIS DEPLOYMENT ONLY CONTAINS BACKEND and UNTESTED FRONTEND.
+## 🧩 State of Development
 
-WILL BE PUSHED BY OCT-10-25. YOU CAN FORK THIS BACKEND AND BUILD YOUR OWN FRONT END REACT UI.
+**Current Version:** `v1.3.0`  
+**Release Date:** October 8, 2025  
+**Release Tag:** `feat: employee-crud`
+
+### 🚀 Features
+- Implemented **Employee CRUD** (`b18171e`)
+- Added **Employee Filtering** (by name, position, and department)
+- Combined backend and frontend query filtering logic
+- Enhanced **EmployeeList** component for smoother UX
+
+### 🧭 Upcoming Features
+- **Department CRUD** (backend + UI)
+- **Add/Update Employee** form integration (UI actions and validations)
+- Improved form UX, error handling, and loading indicators
+
 
 ## 🎯 Series Overview
 
