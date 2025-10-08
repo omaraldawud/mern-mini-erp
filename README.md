@@ -9,15 +9,16 @@ WILL BE PUSHED BY OCT-10-25. YOU CAN FORK THIS BACKEND AND BUILD YOUR OWN FRONT 
 
 ## 🎯 Series Overview
 
-# Note: This repository contains the source code used throughout this demo with video series. Each video builds upon the last, covering key topics in modern full-stack web development:
+ Note: This repository contains the source code used throughout this demo with video series. Each video builds upon the last, covering key topics in modern full-stack web development:
 
-# Initial run of the app should yield this UI (ensure running server and frontend)
+ Initial run of the app should yield this UI (ensure running server and frontend)
 
+# All Employees
 ![Alt text](docs/erp-view1.jpg)
 ![Alt text](docs/erp-emps.jpg)
 # Filtered Employees per Department
 ![Alt text](docs/erp-emps-filter.jpg)
-
+# Departments
 ![Alt text](docs/erp-deps.jpg)
 
 1. **Deploying your Node.js/Express Server to Railway**

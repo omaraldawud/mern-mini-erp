@@ -26,14 +26,18 @@ export const dashboardNavigation = [
   },
   {
     name: "Recruitment Pipeline",
-    href: "/departments",
+    href: "/recruitment-pipeline",
     icon: "bi-person-plus",
   },
   {
     name: "Training & Development",
-    href: "/departments",
+    href: "/training-and-development",
     icon: "bi-journal-bookmark",
   },
 
-  { name: "Workforce Analytics", href: "/departments", icon: "bi-building" },
+  {
+    name: "Workforce Analytics",
+    href: "/workforce-analytics",
+    icon: "bi-building",
+  },
 ];

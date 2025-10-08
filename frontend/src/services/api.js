@@ -35,10 +35,10 @@ api.interceptors.response.use(
 
 // Encapsulates employee-related endpoints.
 export const employeeAPI = {
-  getAll: (params = {}) => api.get("/employees", { params }), // Pass query params
+  getAll: (params = {}) => api.get("/employees", { params }),
   getById: (id) => api.get(`/employees/${id}`),
   create: (data) => api.post("/employees", data),
-  update: (id, data) => api.put(`/employees/${id}`, data),
+  update: (id, data) => api.put(`/employees/${id}`, data), // This uses employeeId, not _id
   delete: (id) => api.delete(`/employees/${id}`),
 };
 
