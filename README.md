@@ -5,11 +5,12 @@ This project walks through the essentials of building and deploying a MERN stack
 
 ## 🧩 State of Development
 
-**Current Version:** `v1.3.0`  
+**Current Version:** `v1.4.0`  
 **Release Date:** October 8, 2025  
 **Release Tag:** `feat: employee-crud`
 
 ### 🚀 Features
+- update dashboard to show real stats
 - Implemented **Employee CRUD** (`b18171e`)
 - Added **Employee Filtering** (by name, position, and department)
 - Combined backend and frontend query filtering logic
@@ -20,12 +21,6 @@ This project walks through the essentials of building and deploying a MERN stack
 - **Add/Update Employee** form integration (UI actions and validations)
 - Improved form UX, error handling, and loading indicators
 
-
-## 🎯 Series Overview
-
- Note: This repository contains the source code used throughout this demo with video series. Each video builds upon the last, covering key topics in modern full-stack web development:
-
- Initial run of the app should yield this UI (ensure running server and frontend)
 
 # All Employees
 ![Alt text](docs/erp-view1.jpg)

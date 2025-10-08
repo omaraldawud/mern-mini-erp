@@ -102,7 +102,7 @@ const EmployeeList = ({
 
         {/* Results count */}
         <div className="mb-3">
-          <small className="text-info">
+          <small className="text-warning">
             Showing {filteredEmployees.length} of {employees.length} employees
             {initialDepartment && ` in ${initialDepartment}`}
           </small>

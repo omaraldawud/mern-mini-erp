@@ -23,7 +23,14 @@ const EmployeesPage = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const department = searchParams.get("department") || "";
+    const action = searchParams.get("action");
+
     setDepartmentFilter(department);
+    // Auto-open form if coming from dashboard "Add Employee"
+    if (action === "create") {
+      setShowForm(true);
+    }
+
     fetchEmployees(department);
   }, [location.search]);
 
