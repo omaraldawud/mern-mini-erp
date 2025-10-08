@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const EmployeeList = ({
-  employees = [],
+  employees,
   onEdit,
-  onDelete,
-  initialDepartment = "", // from backend / URL
+  onTerminate, // Changed from onDelete
+  onReinstate, // New prop
+  loading = false,
+  initialDepartment = "",
 }) => {
   const [search, setSearch] = useState(""); // local text search
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -48,10 +50,22 @@ const EmployeeList = ({
 
   return (
     <div className="card erp-card">
-      <div className="card-header">
+      <div className="card-header d-flex justify-content-between align-items-center">
         <h5 className="card-title mb-0">
-          <i className="bi bi-list-ul me-2"></i>Employee List
+          <i className="bi bi-list-ul me-2"></i>
+          Employee List
+          {initialDepartment && (
+            <span className="badge bg-info ms-2 fs-6">{initialDepartment}</span>
+          )}
         </h5>
+        {loading && (
+          <div
+            className="spinner-border spinner-border-sm text-primary"
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        )}
       </div>
 
       <div className="card-body">
@@ -84,6 +98,14 @@ const EmployeeList = ({
               ✕
             </button>
           )}
+        </div>
+
+        {/* Results count */}
+        <div className="mb-3">
+          <small className="text-info">
+            Showing {filteredEmployees.length} of {employees.length} employees
+            {initialDepartment && ` in ${initialDepartment}`}
+          </small>
         </div>
 
         {/* Employee table */}
@@ -136,16 +158,39 @@ const EmployeeList = ({
                           className="btn btn-outline-primary"
                           onClick={() => onEdit(emp)}
                           disabled={!emp}
+                          title="Edit Employee"
                         >
                           <i className="bi bi-pencil"></i>
                         </button>
-                        <button
-                          className="btn btn-outline-danger"
-                          onClick={() => onDelete(emp._id)}
-                          disabled={!emp}
-                        >
-                          <i className="bi bi-trash"></i>
-                        </button>
+
+                        {/* Safe button rendering with fallbacks */}
+                        {getEmployeeStatus(emp) === "active" ? (
+                          <button
+                            className="btn btn-outline-danger"
+                            onClick={() =>
+                              onTerminate
+                                ? onTerminate(emp)
+                                : console.warn("onTerminate not provided")
+                            }
+                            disabled={!emp || !onTerminate}
+                            title="Terminate Employee"
+                          >
+                            <i className="bi bi-person-dash"></i>
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-outline-success"
+                            onClick={() =>
+                              onReinstate
+                                ? onReinstate(emp)
+                                : console.warn("onReinstate not provided")
+                            }
+                            disabled={!emp || !onReinstate}
+                            title="Reinstate Employee"
+                          >
+                            <i className="bi bi-person-check"></i>
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -155,6 +200,8 @@ const EmployeeList = ({
                   <td colSpan="7" className="text-center py-4 text-muted">
                     <i className="bi bi-people display-4 d-block mb-2"></i>
                     No employees found
+                    {initialDepartment && ` in ${initialDepartment}`}
+                    {debouncedSearch && ` matching "${debouncedSearch}"`}
                   </td>
                 </tr>
               )}

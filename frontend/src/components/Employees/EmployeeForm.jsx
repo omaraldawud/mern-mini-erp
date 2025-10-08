@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const EmployeeForm = ({ employee, onSave, onCancel }) => {
+const EmployeeForm = ({ employee, onSave, onCancel, loading = false }) => {
   const [formData, setFormData] = useState({
     personalInfo: {
       firstName: "",
@@ -192,11 +192,29 @@ const EmployeeForm = ({ employee, onSave, onCancel }) => {
               type="button"
               className="btn btn-secondary"
               onClick={onCancel}
+              disabled={loading}
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary">
-              {employee ? "Update Employee" : "Create Employee"}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                  ></span>
+                  {employee ? "Updating..." : "Creating..."}
+                </>
+              ) : (
+                <>
+                  <i className="bi bi-check-circle me-2"></i>
+                  {employee ? "Update Employee" : "Create Employee"}
+                </>
+              )}
             </button>
           </div>
         </form>
