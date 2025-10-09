@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DepartmentList from "../components/Departments/DepartmentList";
 import DepartmentCard from "../components/Departments/DepartmentCard";
 import DepartmentForm from "../components/Departments/DepartmentForm";
+import ConfirmationModal from "../components/Common/ConfirmationModal";
 import { departmentAPI } from "../services/api";
 
 const DepartmentsPage = () => {
@@ -10,7 +11,13 @@ const DepartmentsPage = () => {
   const [editingDepartment, setEditingDepartment] = useState(null);
   const [viewMode, setViewMode] = useState("table");
   const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  // Modal states
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [departmentToDelete, setDepartmentToDelete] = useState(null);
 
   useEffect(() => {
     fetchDepartments();
@@ -22,30 +29,33 @@ const DepartmentsPage = () => {
       setError("");
 
       const response = await departmentAPI.getAll();
-      console.log("Departments data:", response.data);
-
       const deptData = response.data.data || response.data;
       setDepartments(deptData || []);
     } catch (error) {
       console.error("Error fetching departments:", error);
       setError(
-        "Failed to load departments. Make sure the backend is running on port 5000."
+        "Failed to load departments. Please check if the backend is running."
       );
     } finally {
       setLoading(false);
     }
   };
 
-  // ... keep the rest of the handle functions the same, but remove employee-related code
-
   const handleCreateDepartment = async (departmentData) => {
     try {
+      setActionLoading(true);
       await departmentAPI.create(departmentData);
+
+      setSuccessMessage("Department created successfully!");
       setShowForm(false);
-      fetchData();
-      alert("Department created successfully!");
+      fetchDepartments();
+
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
-      alert("Failed to create department");
+      console.error("Create department error:", error);
+      setError(error.response?.data?.message || "Failed to create department");
+    } finally {
+      setActionLoading(false);
     }
   };
 
@@ -56,30 +66,68 @@ const DepartmentsPage = () => {
 
   const handleUpdateDepartment = async (departmentData) => {
     try {
+      setActionLoading(true);
       await departmentAPI.update(editingDepartment._id, departmentData);
+
+      setSuccessMessage("Department updated successfully!");
       setShowForm(false);
       setEditingDepartment(null);
-      fetchData();
-      alert("Department updated successfully!");
+      fetchDepartments();
+
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
-      alert("Failed to update department");
+      console.error("Update department error:", error);
+      setError(error.response?.data?.message || "Failed to update department");
+    } finally {
+      setActionLoading(false);
     }
   };
 
-  const handleDeleteDepartment = async (departmentId) => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this department? This action cannot be undone."
-      )
-    ) {
-      try {
-        await departmentAPI.delete(departmentId);
-        fetchData();
-        alert("Department deleted successfully!");
-      } catch (error) {
-        alert("Failed to delete department");
-      }
+  // DELETE Department with Confirmation Modal
+  const handleDeleteClick = (department) => {
+    // console.log("🔍 Department object received:", department);
+    // console.log("🔍 departmentId:", department.departmentId);
+    // console.log("🔍 _id:", department._id);
+
+    setDepartmentToDelete(department);
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!departmentToDelete) return;
+
+    try {
+      setActionLoading(true);
+
+      // Use _id instead of departmentId
+      await departmentAPI.delete(departmentToDelete._id);
+
+      setSuccessMessage(
+        `Department "${departmentToDelete.name}" deleted successfully!`
+      );
+      setShowConfirmModal(false);
+      setDepartmentToDelete(null);
+      fetchDepartments();
+
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (error) {
+      console.error("Delete department error:", error);
+      setError(error.response?.data?.message || "Failed to delete department");
+      setShowConfirmModal(false);
+      setDepartmentToDelete(null);
+    } finally {
+      setActionLoading(false);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmModal(false);
+    setDepartmentToDelete(null);
+  };
+
+  const clearMessages = () => {
+    setError("");
+    setSuccessMessage("");
   };
 
   if (loading) {
@@ -98,30 +146,40 @@ const DepartmentsPage = () => {
     );
   }
 
-  if (error) {
-    return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "50vh" }}
-      >
-        <div className="alert alert-danger text-center">
-          <i className="bi bi-exclamation-triangle me-2"></i>
-          {error}
-          <div className="mt-2">
-            <button
-              className="btn btn-sm btn-outline-danger"
-              onClick={fetchData}
-            >
-              Retry
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div>
+      {/* Success Message */}
+      {successMessage && (
+        <div
+          className="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <i className="bi bi-check-circle me-2"></i>
+          {successMessage}
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setSuccessMessage("")}
+          ></button>
+        </div>
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <div
+          className="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <i className="bi bi-exclamation-triangle me-2"></i>
+          {error}
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setError("")}
+          ></button>
+        </div>
+      )}
+
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h1 className="h3 mb-1">
@@ -159,7 +217,11 @@ const DepartmentsPage = () => {
           </div>
 
           {/* Add Department Button */}
-          <button className="btn btn-primary" onClick={() => setShowForm(true)}>
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowForm(true)}
+            disabled={actionLoading}
+          >
             <i className="bi bi-plus-circle me-2"></i>
             Add Department
           </button>
@@ -169,20 +231,21 @@ const DepartmentsPage = () => {
       {showForm ? (
         <DepartmentForm
           department={editingDepartment}
-          employees={employees}
           onSave={
             editingDepartment ? handleUpdateDepartment : handleCreateDepartment
           }
           onCancel={() => {
             setShowForm(false);
             setEditingDepartment(null);
+            clearMessages();
           }}
+          loading={actionLoading}
         />
       ) : viewMode === "table" ? (
         <DepartmentList
           departments={departments}
           onEdit={handleEditDepartment}
-          onDelete={handleDeleteDepartment}
+          onDelete={handleDeleteClick} // Updated to use modal
         />
       ) : (
         <div className="row">
@@ -194,7 +257,7 @@ const DepartmentsPage = () => {
               <DepartmentCard
                 department={department}
                 onEdit={handleEditDepartment}
-                onDelete={handleDeleteDepartment}
+                onDelete={handleDeleteClick} // Updated to use modal
               />
             </div>
           ))}
@@ -220,6 +283,22 @@ const DepartmentsPage = () => {
           </div>
         </div>
       )}
+
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        show={showConfirmModal}
+        onHide={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Delete Department"
+        message={
+          departmentToDelete
+            ? `Are you sure you want to delete the "${departmentToDelete.name}" department? This action cannot be undone and will remove all associated data.`
+            : "Are you sure you want to delete this department?"
+        }
+        confirmText="Yes, Delete"
+        cancelText="Cancel"
+        variant="danger"
+      />
     </div>
   );
 };

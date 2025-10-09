@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-const DepartmentForm = ({ department, onSave, onCancel, employees = [] }) => {
+const DepartmentForm = ({ department, onSave, onCancel, loading = false }) => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     budget: "",
-    manager: "",
     active: true,
   });
 
@@ -17,7 +16,6 @@ const DepartmentForm = ({ department, onSave, onCancel, employees = [] }) => {
         name: department.name || "",
         description: department.description || "",
         budget: department.budget || "",
-        manager: department.manager?._id || "",
         active: department.active !== undefined ? department.active : true,
       });
     }
@@ -49,8 +47,8 @@ const DepartmentForm = ({ department, onSave, onCancel, employees = [] }) => {
       newErrors.description = "Description is required";
     }
 
-    if (!formData.budget || formData.budget < 0) {
-      newErrors.budget = "Valid budget amount is required";
+    if (formData.budget && formData.budget < 0) {
+      newErrors.budget = "Budget must be a positive number";
     }
 
     setErrors(newErrors);
@@ -59,137 +57,89 @@ const DepartmentForm = ({ department, onSave, onCancel, employees = [] }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (validateForm()) {
       onSave(formData);
     }
   };
 
-  const departmentOptions = [
-    "Engineering",
-    "Human Resources",
-    "Sales",
-    "Marketing",
-    "Finance",
-    "Operations",
-  ];
+  const getInputClass = (field) => {
+    return `form-control ${errors[field] ? "is-invalid" : ""}`;
+  };
 
   return (
-    <div className="card erp-card">
-      <div className="card-header">
+    <div className="card border-0 shadow-sm">
+      <div className="card-header bg-white">
         <h5 className="card-title mb-0">
           <i className="bi bi-building me-2"></i>
           {department ? "Edit Department" : "Create New Department"}
         </h5>
       </div>
+
       <div className="card-body">
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-6">
               <div className="mb-3">
-                <label className="form-label">
+                <label className="form-label fw-semibold">
                   Department Name <span className="text-danger">*</span>
                 </label>
-                {department ? (
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={formData.name}
-                    disabled
-                    readOnly
-                  />
-                ) : (
-                  <select
-                    className={`form-select ${errors.name ? "is-invalid" : ""}`}
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    required
-                  >
-                    <option value="">Select Department</option>
-                    {departmentOptions.map((dept) => (
-                      <option key={dept} value={dept}>
-                        {dept}
-                      </option>
-                    ))}
-                  </select>
-                )}
+                <input
+                  type="text"
+                  className={getInputClass("name")}
+                  value={formData.name}
+                  onChange={(e) => handleChange("name", e.target.value)}
+                  placeholder="e.g., Engineering, Marketing, Sales"
+                  disabled={!!department} // Can't change name when editing
+                />
                 {errors.name && (
-                  <div className="invalid-feedback d-block">{errors.name}</div>
+                  <div className="invalid-feedback">{errors.name}</div>
+                )}
+                {department && (
+                  <div className="form-text text-muted">
+                    Department name cannot be changed after creation
+                  </div>
                 )}
               </div>
 
               <div className="mb-3">
-                <label className="form-label">
+                <label className="form-label fw-semibold">
                   Description <span className="text-danger">*</span>
                 </label>
                 <textarea
-                  className={`form-control ${
-                    errors.description ? "is-invalid" : ""
-                  }`}
+                  className={getInputClass("description")}
                   rows="3"
                   value={formData.description}
                   onChange={(e) => handleChange("description", e.target.value)}
                   placeholder="Describe the department's purpose and responsibilities..."
-                  required
-                ></textarea>
+                />
                 {errors.description && (
-                  <div className="invalid-feedback d-block">
-                    {errors.description}
-                  </div>
+                  <div className="invalid-feedback">{errors.description}</div>
                 )}
               </div>
             </div>
 
             <div className="col-md-6">
               <div className="mb-3">
-                <label className="form-label">
-                  Annual Budget <span className="text-danger">*</span>
-                </label>
+                <label className="form-label fw-semibold">Annual Budget</label>
                 <div className="input-group">
                   <span className="input-group-text">$</span>
                   <input
                     type="number"
-                    className={`form-control ${
-                      errors.budget ? "is-invalid" : ""
-                    }`}
+                    className={getInputClass("budget")}
                     value={formData.budget}
                     onChange={(e) =>
                       handleChange("budget", parseFloat(e.target.value) || "")
                     }
+                    placeholder="0.00"
                     min="0"
                     step="1000"
-                    placeholder="0.00"
-                    required
                   />
                 </div>
                 {errors.budget && (
-                  <div className="invalid-feedback d-block">
-                    {errors.budget}
-                  </div>
+                  <div className="invalid-feedback">{errors.budget}</div>
                 )}
-              </div>
-
-              <div className="mb-3">
-                <label className="form-label">Department Manager</label>
-                <select
-                  className="form-select"
-                  value={formData.manager}
-                  onChange={(e) => handleChange("manager", e.target.value)}
-                >
-                  <option value="">No Manager Assigned</option>
-                  {employees
-                    .filter(
-                      (emp) => emp.employmentInfo.department === formData.name
-                    )
-                    .map((employee) => (
-                      <option key={employee._id} value={employee._id}>
-                        {employee.personalInfo.firstName}{" "}
-                        {employee.personalInfo.lastName}
-                      </option>
-                    ))}
-                </select>
                 <div className="form-text">
-                  Only employees from this department can be assigned as manager
+                  Optional: Set the department's annual budget
                 </div>
               </div>
 
@@ -216,7 +166,7 @@ const DepartmentForm = ({ department, onSave, onCancel, employees = [] }) => {
           </div>
 
           {/* Form Actions */}
-          <div className="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+          <div className="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
             <div>
               <small className="text-muted">
                 <i className="bi bi-info-circle me-1"></i>
@@ -229,13 +179,27 @@ const DepartmentForm = ({ department, onSave, onCancel, employees = [] }) => {
                 type="button"
                 className="btn btn-outline-secondary"
                 onClick={onCancel}
+                disabled={loading}
               >
                 <i className="bi bi-x-circle me-2"></i>
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary">
-                <i className="bi bi-check-circle me-2"></i>
-                {department ? "Update Department" : "Create Department"}
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2"></span>
+                    {department ? "Updating..." : "Creating..."}
+                  </>
+                ) : (
+                  <>
+                    <i className="bi bi-check-circle me-2"></i>
+                    {department ? "Update Department" : "Create Department"}
+                  </>
+                )}
               </button>
             </div>
           </div>

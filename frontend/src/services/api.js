@@ -44,11 +44,10 @@ export const employeeAPI = {
 
 // Encapsulates department-related endpoints.
 export const departmentAPI = {
-  getAll: () => api.get("/departments"), // GET all departments
-  getById: (id) => api.get(`/departments/${id}`), // GET one department by id
-  create: (data) => api.post("/departments", data), // POST create a new department
-  update: (id, data) => api.put(`/departments/${id}`, data), // PUT update a department
-  delete: (id) => api.delete(`/departments/${id}`), // DELETE a department
+  getAll: () => api.get("/departments"),
+  create: (data) => api.post("/departments", data),
+  update: (id, data) => api.put(`/departments/${id}`, data), // uses departmentId
+  delete: (id) => api.delete(`/departments/${id}`), // uses departmentId
 };
 
 export default api;
