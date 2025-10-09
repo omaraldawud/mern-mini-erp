@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.5.0...v1.6.0) (2025-10-09)
+
+
+### Features
+
+* Added Placeholders for All HCM Modules ([dc92fdd](https://github.com/omaraldawud/mern-mini-erp/commit/dc92fdd297f2f7ef38c569ed27ed0f0444fc6071))
+
 # [1.5.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.4.0...v1.5.0) (2025-10-09)
 
 
