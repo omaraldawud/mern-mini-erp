@@ -5,9 +5,9 @@ This project walks through the essentials of building and deploying a MERN stack
 
 ## 🧩 State of Development
 
-**Current Version:** `v1.4.0`  
-**Release Date:** October 8, 2025  
-**Release Tag:** `feat: employee-crud`
+**Current Version:** `v1.5.0`  
+**Release Date:** October 9, 2025  
+**Release Tag:** `feat: dept-crud`
 
 ### 🚀 Features
 - update dashboard to show real stats

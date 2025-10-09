@@ -25,7 +25,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Database connection with better error handling
+// Database connection with  error handling
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
