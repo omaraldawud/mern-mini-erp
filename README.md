@@ -23,7 +23,7 @@ This project walks through the essentials of building and deploying a MERN stack
 
 
 # All Employees
-![Alt text](docs/erp-view1.jpg)
+![Alt text](docs/erp-dashboard.jpg)
 ![Alt text](docs/erp-emps.jpg)
 # Filtered Employees per Department
 ![Alt text](docs/erp-emps-filter.jpg)

@@ -1,9 +1,14 @@
 export const dashboardNavigation = [
   { name: "HCM Dashboard", href: "/", icon: "bi-speedometer2" },
-
   { name: "Employees", href: "/employees", icon: "bi-people" },
   { name: "Departments", href: "/departments", icon: "bi-building" },
+  {
+    name: "Workforce Analytics",
+    href: "/workforce-analytics",
+    icon: "bi-graph-up",
+  },
 
+  // TODO this list of not done features
   {
     name: "Time & Attendance",
     href: "/time-and-attendance",
@@ -33,11 +38,5 @@ export const dashboardNavigation = [
     name: "Training & Development",
     href: "/training-and-development",
     icon: "bi-journal-bookmark",
-  },
-
-  {
-    name: "Workforce Analytics",
-    href: "/workforce-analytics",
-    icon: "bi-building",
   },
 ];
