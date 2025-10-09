@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.4.0...v1.5.0) (2025-10-09)
+
+
+### Features
+
+* Added Department CRUD ([841b843](https://github.com/omaraldawud/mern-mini-erp/commit/841b843eb4a07ac23d748dd172988b46325ba5f2))
+
 # [1.4.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.3.0...v1.4.0) (2025-10-08)
 
 
