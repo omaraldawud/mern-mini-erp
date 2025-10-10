@@ -1,3 +1,19 @@
+# [2.0.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.6.0...v2.0.0) (2025-10-10)
+
+
+* Merge branch 'main' of https://github.com/omaraldawud/mern-mini BREAKING CHANGE: 2.0 ([483a78d](https://github.com/omaraldawud/mern-mini-erp/commit/483a78d94ce360455c416dbe650db282123e7584))
+
+
+### Features
+
+* add main dashboard and modular HCM/SCM structure ([3a98a59](https://github.com/omaraldawud/mern-mini-erp/commit/3a98a5901406d7c25c5e3312817f4ffdf51eb8c8))
+
+
+### BREAKING CHANGES
+
+* 2.0
+* HCM routes moved to /hcm, SCM routes moved to /scm, previous single-dashboard URLs are removed
+
 # [1.6.0](https://github.com/omaraldawud/mern-mini-erp/compare/v1.5.0...v1.6.0) (2025-10-09)
 
 
