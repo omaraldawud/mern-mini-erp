@@ -1,9 +1,19 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { dashboardNavigation } from "./DashboardNavigation";
+import { mainDashboardNav } from "./mainDashboardNav";
+import { hcmDashboardNav } from "./hcmDashboardNav";
+import { scmDashboardNav } from "./scmDashboardNav";
 
-const Sidebar = () => {
+const moduleNavs = {
+  main: mainDashboardNav,
+  hcm: hcmDashboardNav,
+  scm: scmDashboardNav,
+  // finance: financeDashboardNav, // future
+};
+
+const Sidebar = ({ module }) => {
   const location = useLocation();
+  const navToUse = moduleNavs[module] || [];
 
   return (
     <div className="erp-sidebar text-white" style={{ width: "300px" }}>
@@ -15,13 +25,17 @@ const Sidebar = () => {
         <div className="d-flex align-items-center">
           <span className="badge bg-warning text-dark d-flex align-items-center py-2">
             <i className="bi-person-badge me-2"></i>
-            HCM Module
+            {module ? module.toUpperCase() : "MAIN"} Module
           </span>
         </div>
       </div>
+
       <nav className="p-3">
         <ul className="nav nav-pills flex-column">
-          {dashboardNavigation.map((item) => (
+          {navToUse.length === 0 && (
+            <li className="nav-item mb-2 text-light">No menu available</li>
+          )}
+          {navToUse.map((item) => (
             <li key={item.name} className="nav-item mb-2">
               <Link
                 to={item.href}

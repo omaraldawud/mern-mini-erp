@@ -1,53 +1,54 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
+// Map routes to page content
+const pageContent = {
+  "/payroll-processing": {
+    title: "Payroll Processing",
+    description:
+      "Automated payroll calculations, tax compliance, and payment processing",
+    emoji: "💰",
+  },
+  "/benefits-administration": {
+    title: "Benefits Administration",
+    description:
+      "Comprehensive benefits management, enrollment, and compliance tracking",
+    emoji: "🏥",
+  },
+  "/performance-management": {
+    title: "Performance Management",
+    description:
+      "Employee performance tracking, reviews, and development planning",
+    emoji: "📊",
+  },
+  "/recruitment-pipeline": {
+    title: "Recruitment Pipeline",
+    description:
+      "Streamlined hiring process from applicant tracking to onboarding",
+    emoji: "👥",
+  },
+  "/training-and-development": {
+    title: "Training & Development",
+    description:
+      "Employee training programs, skill development, and career growth planning",
+    emoji: "🎓",
+  },
+  // Default fallback (original content)
+  "/time-and-attendance": {
+    title: "Time & Attendance",
+    description:
+      "Advanced time tracking, shift management, and attendance analytics",
+    emoji: "🕒",
+  },
+};
+
+function getPageContent(pathName) {
+  return pageContent[pathName] || pageContent["/time-and-attendance"];
+}
+
 const TimeAndAttendancePage = () => {
   const location = useLocation();
-
-  // Map routes to page content
-  const pageContent = {
-    "/payroll-processing": {
-      title: "Payroll Processing",
-      description:
-        "Automated payroll calculations, tax compliance, and payment processing",
-      emoji: "💰",
-    },
-    "/benefits-administration": {
-      title: "Benefits Administration",
-      description:
-        "Comprehensive benefits management, enrollment, and compliance tracking",
-      emoji: "🏥",
-    },
-    "/performance-management": {
-      title: "Performance Management",
-      description:
-        "Employee performance tracking, reviews, and development planning",
-      emoji: "📊",
-    },
-    "/recruitment-pipeline": {
-      title: "Recruitment Pipeline",
-      description:
-        "Streamlined hiring process from applicant tracking to onboarding",
-      emoji: "👥",
-    },
-    "/training-and-development": {
-      title: "Training & Development",
-      description:
-        "Employee training programs, skill development, and career growth planning",
-      emoji: "🎓",
-    },
-    // Default fallback (original content)
-    "/time-and-attendance": {
-      title: "Time & Attendance",
-      description:
-        "Advanced time tracking, shift management, and attendance analytics",
-      emoji: "🕒",
-    },
-  };
-
-  // Get content for current path or fallback to time-and-attendance
-  const content =
-    pageContent[location.pathname] || pageContent["/time-and-attendance"];
+  const content = getPageContent(location.pathname);
 
   return (
     <div className="text-center py-5">

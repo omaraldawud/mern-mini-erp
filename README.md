@@ -5,21 +5,57 @@ This project walks through the essentials of building and deploying a MERN stack
 
 ## 🧩 State of Development
 
-**Current Version:** `v1.5.0`  
-**Release Date:** October 9, 2025  
-**Release Tag:** `feat: dept-crud`
+# 🚀 Full-Stack MERN - MercuryERP - Modular ERP System
+
+Welcome to the **Full-Stack MERN Mini-Series**!  
+This project walks through the essentials of building and deploying a MERN stack application step by step — perfect for anyone looking to quickly learn how to take a project from local development to live production.
+
+---
+
+## 🧩 State of Development
+
+**Current Version:** `v2.0.0`  
+**Release Date:** October 10, 2025  
+**Release Tag:** `feat: modular dashboard and modules (breaking changes)`
+
+### ⚠️ Breaking Changes
+- Main dashboard `/` added as top-level module hub
+- HCM moved to `/hcm`, SCM to `/scm`, Finance to `/finance`
+- Sidebar now dynamically switches menus based on module
+- Navbar module switcher added
 
 ### 🚀 Features
-- update dashboard to show real stats
-- Implemented **Employee CRUD** (`b18171e`)
-- Added **Employee Filtering** (by name, position, and department)
-- Combined backend and frontend query filtering logic
-- Enhanced **EmployeeList** component for smoother UX
+- **Main Dashboard** overview with quick links to HCM, SCM, Finance, Projects, Reports & Analytics, Settings
+- **Dynamic module-based Sidebar** (Main, HCM, SCM)
+- Updated **HCM Module**:
+  - Employee CRUD
+  - Department CRUD (in progress)
+  - Workforce Analytics
+  - Time & Attendance, Payroll, Benefits, Performance Management, Recruitment, Training & Development
+- Added **SCM Module** placeholders:
+  - SCM Dashboard, Suppliers, Purchase Orders, Inventory, Warehouses, Shipments, Procurement Analytics
+- Backend + Frontend integration for HCM filtering and stats
 
 ### 🧭 Upcoming Features
-- **Department CRUD** (backend + UI)
-- **Add/Update Employee** form integration (UI actions and validations)
-- Improved form UX, error handling, and loading indicators
+- Finance Module (Accounting, Invoicing, Budgeting)
+- Projects Module with task management
+- Full SCM functionality
+- Cross-module Reports & Analytics
+
+---
+
+## 🛠️ Tech Stack
+
+* **MongoDB Atlas** → Cloud database  
+* **Express.js** → Backend framework  
+* **React.js** → Frontend library  
+* **Node.js** → Runtime environment  
+
+---
+
+## 📂 Repository Structure
+
+
 
 
 # All Employees

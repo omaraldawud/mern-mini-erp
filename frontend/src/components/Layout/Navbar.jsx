@@ -1,15 +1,36 @@
 import React from "react";
-import { Dropdown, NavDropdown } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
+import { modules } from "../../../reactUtils/modules";
 
-//
-const Navbar = () => {
+const Navbar = ({ currentModule }) => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return (
     <nav className="navbar navbar-dark erp-navbar shadow-sm">
       <div className="container-fluid">
         <span className="navbar-brand mb-0 h1">
           <i className="bi bi-building me-2"></i>
-          HR Management System - HCM
+          {currentModule.toUpperCase()} Management System
         </span>
+
+        <div className="me-3 d-flex gap-2">
+          {modules.map((mod) => (
+            <Link key={mod.name} to={mod.path}>
+              <Button
+                variant={
+                  currentModule === mod.name.toLowerCase()
+                    ? "light"
+                    : "outline-light"
+                }
+                disabled={currentModule === mod.name.toLowerCase()}
+              >
+                {mod.name}
+              </Button>
+            </Link>
+          ))}
+        </div>
 
         <div className="d-flex align-items-center">
           <Dropdown>
