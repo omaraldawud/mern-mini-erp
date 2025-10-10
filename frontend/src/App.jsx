@@ -4,12 +4,16 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Layout/Navbar";
 import Sidebar from "./components/Layout/Sidebar";
-import DashboardPage from "./pages/DashboardPage";
-import EmployeesPage from "./pages/EmployeesPage";
-import DepartmentsPage from "./pages/DepartmentsPage";
-import WorkforceAnalyticsPage from "./pages/WorkforceAnalyticsPage";
-import TimeAndAttendancePage from "./pages/TimeAndAttendancePage";
+// pages
+import EmployeesPage from "./pages/hcm/EmployeesPage";
+import DepartmentsPage from "./pages/hcm/DepartmentsPage";
+import WorkforceAnalyticsPage from "./pages/hcm/WorkforceAnalyticsPage";
+import TimeAndAttendancePage from "./pages/hcm/TimeAndAttendancePage";
 import SCMPlaceholderPage from "./pages/scm/SCMPlaceholderPage";
+// dashboards
+import MainDashboardPage from "./pages/MainDashBoard";
+import DashboardPage from "./pages/hcm/HCMDashboardPage";
+
 // React Utils
 import { getModuleFromPath } from "../reactUtils/getModuleFromPath";
 import { useLocation } from "react-router-dom";
@@ -45,6 +49,9 @@ const AppContent = () => {
           {/* prettier-ignore-start */}
           <Routes>
             {/* Main Dashboard */}
+            <Route path="/" element={<MainDashboardPage />} />
+
+            {/* HCM Dashboard */}
             <Route path="/" element={<DashboardPage />} />
 
             {/* HCM Routes */}

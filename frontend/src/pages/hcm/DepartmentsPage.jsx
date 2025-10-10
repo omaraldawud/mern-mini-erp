@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import DepartmentList from "../components/Departments/DepartmentList";
-import DepartmentCard from "../components/Departments/DepartmentCard";
-import DepartmentForm from "../components/Departments/DepartmentForm";
-import ConfirmationModal from "../components/Common/ConfirmationModal";
-import { departmentAPI } from "../services/api";
+import DepartmentList from "../../components/Departments/DepartmentList";
+import DepartmentCard from "../../components/Departments/DepartmentCard";
+import DepartmentForm from "../../components/Departments/DepartmentForm";
+import ConfirmationModal from "../../components/Common/ConfirmationModal";
+import { departmentAPI } from "../../services/api";
 
 const DepartmentsPage = () => {
   const [departments, setDepartments] = useState([]);

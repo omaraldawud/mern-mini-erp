@@ -14,7 +14,7 @@ const DepartmentList = ({ departments, onEdit, onDelete, loading = false }) => {
   }, [search]);
 
   const handleViewEmployees = (departmentName) => {
-    navigate(`/employees?department=${encodeURIComponent(departmentName)}`);
+    navigate(`/hcm/employees?department=${encodeURIComponent(departmentName)}`);
   };
 
   // Filter departments based on search - ADD THIS FUNCTION

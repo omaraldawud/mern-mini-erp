@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import EmployeeList from "../components/Employees/EmployeeList";
-import EmployeeForm from "../components/Employees/EmployeeForm";
-import ConfirmationModal from "../components/Common/ConfirmationModal";
-import { employeeAPI } from "../services/api";
+import EmployeeList from "../../components/Employees/EmployeeList";
+import EmployeeForm from "../../components/Employees/EmployeeForm";
+import ConfirmationModal from "../../components/Common/ConfirmationModal";
+import { employeeAPI } from "../../services/api";
 
 const EmployeesPage = () => {
   const [employees, setEmployees] = useState([]);

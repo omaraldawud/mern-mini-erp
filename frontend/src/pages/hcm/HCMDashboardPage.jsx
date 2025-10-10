@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { employeeAPI, departmentAPI } from "../services/api";
+import { employeeAPI, departmentAPI } from "../../services/api";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const DashboardPage = () => {
   };
 
   const handleAddEmployee = () => {
-    navigate("/employees?action=create");
+    navigate("/hcm/employees?action=create");
   };
 
   const handleViewReports = () => {
@@ -65,11 +65,11 @@ const DashboardPage = () => {
   };
 
   const handleViewEmployees = () => {
-    navigate("/employees");
+    navigate("/hcm/employees");
   };
 
   const handleViewDepartments = () => {
-    navigate("/departments");
+    navigate("/hcm/departments");
   };
 
   if (stats.loading) {

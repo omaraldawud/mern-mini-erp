@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { employeeAPI, departmentAPI } from "../services/api";
+import { employeeAPI, departmentAPI } from "../../services/api";
 
 const WorkforceAnalyticsPage = () => {
   const [analytics, setAnalytics] = useState(null);
