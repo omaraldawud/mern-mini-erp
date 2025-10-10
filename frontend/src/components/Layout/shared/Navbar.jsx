@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Dropdown } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
-import { modules } from "../../../reactUtils/modules";
+import { modules } from "../../../../reactUtils/modules";
 
 const Navbar = ({ currentModule }) => {
   const location = useLocation();
@@ -15,27 +15,30 @@ const Navbar = ({ currentModule }) => {
           {currentModule.toUpperCase()} Management System
         </span>
 
-        <div className="me-3 d-flex gap-2">
-          {modules.map((mod) => (
-            <Link key={mod.name} to={mod.path}>
-              <Button
-                variant={
-                  currentModule === mod.name.toLowerCase()
-                    ? "light"
-                    : "outline-light"
-                }
-                disabled={currentModule === mod.name.toLowerCase()}
-              >
-                {mod.name}
-              </Button>
-            </Link>
-          ))}
-        </div>
+        {/* Only show module buttons if NOT on Main Dashboard */}
+        {currentModule !== "main" && (
+          <div className="me-3 d-flex gap-2">
+            {modules.map((mod) => (
+              <Link key={mod.name} to={mod.path}>
+                <Button
+                  variant={
+                    currentModule === mod.name.toLowerCase()
+                      ? "light"
+                      : "outline-light"
+                  }
+                  disabled={currentModule === mod.name.toLowerCase()}
+                >
+                  {mod.name}
+                </Button>
+              </Link>
+            ))}
+          </div>
+        )}
 
         <div className="d-flex align-items-center">
           <Dropdown>
             <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
-              <i className="bi bi-person-circle me-2"></i>
+              <i className="bi bi-person-circle text-danger me-2"></i>
               Admin
             </Dropdown.Toggle>
 

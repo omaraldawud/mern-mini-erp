@@ -2,8 +2,8 @@ import "../src/assets/css/App.css";
 import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Layout/Navbar";
-import Sidebar from "./components/Layout/Sidebar";
+import Navbar from "./components/Layout/shared/Navbar";
+import Sidebar from "./components/Layout/shared/Sidebar";
 // pages
 import EmployeesPage from "./pages/hcm/EmployeesPage";
 import DepartmentsPage from "./pages/hcm/DepartmentsPage";
@@ -11,7 +11,7 @@ import WorkforceAnalyticsPage from "./pages/hcm/WorkforceAnalyticsPage";
 import TimeAndAttendancePage from "./pages/hcm/TimeAndAttendancePage";
 import SCMPlaceholderPage from "./pages/scm/SCMPlaceholderPage";
 // dashboards
-import MainDashboardPage from "./pages/MainDashBoard";
+import MainDashboardPage from "./pages/MainDashBoardPage";
 import DashboardPage from "./pages/hcm/HCMDashboardPage";
 
 // React Utils

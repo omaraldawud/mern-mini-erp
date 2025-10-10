@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { mainDashboardNav } from "./mainDashboardNav";
-import { hcmDashboardNav } from "./hcmDashboardNav";
-import { scmDashboardNav } from "./scmDashboardNav";
+import { mainDashboardNav } from "../mainDashboardNav";
+import { hcmDashboardNav } from "../hcmDashboardNav";
+import { scmDashboardNav } from "../scmDashboardNav";
 
 const moduleNavs = {
   main: mainDashboardNav,
